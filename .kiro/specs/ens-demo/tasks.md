@@ -7,12 +7,12 @@
   - _Requirements: 3.1_
 
 - [ ] 2. Create smart contract structure (simplified for learning)
-  - [ ] 2.1 Set up contract directory structure
+  - [x] 2.1 Set up contract directory structure
     - Create the necessary folders for contracts, tests, and scripts
     - Configure foundry.toml with appropriate settings
     - _Requirements: 3.2_
   
-  - [ ] 2.2 Create interfaces for ENS contracts
+  - [x] 2.2 Create interfaces for ENS contracts
     - Create IENSRegistry.sol interface
     - Create IRegistrar.sol interface
     - Create IResolver.sol interface
@@ -20,21 +20,21 @@
     - _Requirements: 1.1_
 
 - [ ] 3. Implement core ENS contracts (simplified for learning)
-  - [ ] 3.1 Implement ENSRegistry contract
+  - [x] 3.1 Implement ENSRegistry contract
     - Implement owner, resolver, and TTL mappings
     - Implement setOwner, setSubnodeOwner, setResolver, and setTTL functions
     - Add appropriate events for state changes
     - Write unit tests for ENSRegistry
     - _Requirements: 1.1, 1.6_
   
-  - [ ] 3.2 Implement Resolver contract
+  - [x] 3.2 Implement Resolver contract
     - Implement address and name resolution functionality
     - Implement setAddr and setName functions
     - Implement supportsInterface for ERC-165 compliance
     - Write unit tests for Resolver
     - _Requirements: 1.4, 1.5, 1.6_
   
-  - [ ] 3.3 Implement Registrar contract
+  - [x] 3.3 Implement Registrar contract
     - Implement domain registration with payment
     - Implement domain renewal functionality
     - Implement expiration logic
@@ -42,7 +42,7 @@
     - Write unit tests for Registrar
     - _Requirements: 1.2, 1.7_
   
-  - [ ] 3.4 Implement ReverseRegistrar contract
+  - [x] 3.4 Implement ReverseRegistrar contract
     - Implement reverse lookup functionality
     - Implement setName function for setting reverse records
     - Write unit tests for ReverseRegistrar
