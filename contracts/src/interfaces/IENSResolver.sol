@@ -6,7 +6,7 @@ pragma solidity ^0.8.20;
  * @dev Interface for the ENS Resolver contract, which stores and provides
  * resolution data for domain names.
  */
-interface IResolver {
+interface IENSResolver {
     // Events
     event AddrChanged(bytes32 indexed node, address addr);
     event NameChanged(bytes32 indexed node, string name);

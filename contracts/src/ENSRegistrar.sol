@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "./interfaces/IENSRegistry.sol";
-import "./interfaces/IResolver.sol";
+import "./interfaces/IENSResolver.sol";
 
 /**
  * @title ENSRegistrar
@@ -15,7 +15,7 @@ import "./interfaces/IResolver.sol";
  */
 contract ENSRegistrar {
     IENSRegistry private _registry;
-    IResolver private _resolver;
+    IENSResolver private _resolver;
     bytes32 private _baseNode;
 
     // Mapping from name to owner for easy lookup
@@ -28,7 +28,7 @@ contract ENSRegistrar {
 
     constructor(address registryAddress, address resolverAddress, bytes32 baseNode) {
         _registry = IENSRegistry(registryAddress);
-        _resolver = IResolver(resolverAddress);
+        _resolver = IENSResolver(resolverAddress);
         _baseNode = baseNode;
     }
 

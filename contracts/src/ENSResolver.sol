@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "./interfaces/IResolver.sol";
+import "./interfaces/IENSResolver.sol";
 import "./interfaces/IENSRegistry.sol";
 
 /**
@@ -9,7 +9,7 @@ import "./interfaces/IENSRegistry.sol";
  * @dev Implementation of the ENS Resolver, which stores and provides
  * resolution data for domain names.
  */
-contract ENSResolver is IResolver {
+contract ENSResolver is IENSResolver {
     // ENS registry
     IENSRegistry private _registry;
 
@@ -86,6 +86,6 @@ contract ENSResolver is IResolver {
      */
     function supportsInterface(bytes4 interfaceID) public pure override returns (bool) {
         return interfaceID == ADDR_INTERFACE_ID || interfaceID == NAME_INTERFACE_ID
-            || interfaceID == type(IResolver).interfaceId;
+            || interfaceID == type(IENSResolver).interfaceId;
     }
 }
