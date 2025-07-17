@@ -6,9 +6,9 @@
   - Create initial README.md with project overview
   - _Requirements: 3.1_
 
-- [ ] 2. Set up Foundry project for smart contracts
-  - [ ] 2.1 Initialize Foundry project in the contracts directory
-    - Run forge init to create the basic structure
+- [ ] 2. Create smart contract structure (simplified for learning)
+  - [ ] 2.1 Set up contract directory structure
+    - Create the necessary folders for contracts, tests, and scripts
     - Configure foundry.toml with appropriate settings
     - _Requirements: 3.2_
   
@@ -19,7 +19,7 @@
     - Create IReverseRegistrar.sol interface
     - _Requirements: 1.1_
 
-- [ ] 3. Implement core ENS contracts
+- [ ] 3. Implement core ENS contracts (simplified for learning)
   - [ ] 3.1 Implement ENSRegistry contract
     - Implement owner, resolver, and TTL mappings
     - Implement setOwner, setSubnodeOwner, setResolver, and setTTL functions
@@ -59,18 +59,24 @@
     - Set up example resolvers and records
     - _Requirements: 1.8_
 
-- [ ] 5. Set up React frontend project
-  - [ ] 5.1 Initialize React project with TypeScript
-    - Create project using Create React App or Vite
-    - Configure TypeScript
-    - Set up project structure following the design
+- [ ] 5. Create frontend project structure
+  - [ ] 5.1 Set up frontend directory structure
+    - Create the necessary folders for components, hooks, and utilities
+    - Set up TypeScript configuration
+    - Create basic Vite configuration
     - _Requirements: 2.1, 3.3_
   
   - [ ] 5.2 Set up Viem and Wagmi integration
     - Install Viem and Wagmi libraries
-    - Configure Wagmi for wallet connections
-    - Create contract interaction utilities with Viem
-    - _Requirements: 2.6, 2.9_
+    - Configure Wagmi client and providers
+    - Use Wagmi's useAccount and useConnect hooks
+    - Create custom hooks using Viem for contract interactions
+    - Implement domain registration, renewal, and management functions
+    - Implement name resolution functions
+    - Use Viem's built-in namehash and ENS utilities
+    - Use Viem's formatting and validation utilities
+    - Implement transaction tracking and monitoring
+    - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9_
 
 - [ ] 6. Implement frontend core components
   - [ ] 6.1 Implement WalletConnector component
@@ -110,94 +116,38 @@
     - Display success/error messages
     - _Requirements: 2.7, 2.8_
 
-- [ ] 7. Implement frontend data hooks
-  - [ ] 7.1 Implement Wagmi hooks for wallet connection
-    - Configure Wagmi client and providers
-    - Use Wagmi's useAccount and useConnect hooks
-    - Set up network detection and switching
-    - _Requirements: 2.1, 2.6_
-  
-  - [ ] 7.2 Implement ENS contract interactions with Viem
-    - Create custom hooks using Viem for contract interactions
-    - Implement domain registration, renewal, and management functions
-    - Implement name resolution functions
-    - _Requirements: 2.2, 2.3, 2.4, 2.5_
-  
-  - [ ] 7.3 Implement useTransactions hook
-    - Create hook for transaction tracking
-    - Implement transaction submission and monitoring
-    - Store transaction history
-    - _Requirements: 2.7, 2.8_
-
-- [ ] 8. Implement utility functions
-  - [ ] 8.1 Implement namehash utility
-    - Create function to convert domain names to ENS node hashes
-    - Add validation for domain name format
-    - _Requirements: 1.4, 2.4_
-  
-  - [ ] 8.2 Implement formatters and validators
-    - Create functions for formatting addresses and names
-    - Implement input validation functions
-    - _Requirements: 2.2, 2.4, 2.5_
-
-- [ ] 9. Set up Docker environment
-  - [x] 9.1 Create Dockerfile for Anvil
-    - Create Dockerfile for running Anvil node
+- [ ] 7. Set up Docker environment (simplified for learning)
+  - [x] 7.1 Create Dockerfile for Anvil
+    - Create simple Dockerfile for running Anvil node
     - Configure persistent storage for blockchain state
     - _Requirements: 4.1, 4.5_
   
-  - [x] 9.2 Create Dockerfile for frontend
-    - Create Dockerfile for running React development server
+  - [x] 7.2 Create Dockerfile for frontend
+    - Create simple Dockerfile for running Vite development server
     - Configure hot-reloading
     - _Requirements: 4.2, 5.3_
   
-  - [ ] 9.3 Create docker-compose.yml
+  - [ ] 7.3 Create docker-compose.yml
     - Configure services for Anvil, contract deployment, and frontend
     - Set up networking between containers
     - Configure environment variables
     - Set up shared volumes
+    - Ensure no local dependencies are required
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.6, 4.7_
 
-- [ ] 10. Create helper scripts
-  - [ ] 10.1 Create setup.sh script
+- [ ] 8. Create helper scripts
+  - [ ] 8.1 Create setup.sh script
     - Implement script to install dependencies for both contracts and frontend
     - _Requirements: 3.4_
   
-  - [ ] 10.2 Create deploy-contracts.sh script
+  - [ ] 8.2 Create deploy-contracts.sh script
     - Implement script to build and deploy contracts to local node
     - _Requirements: 5.5_
   
-  - [ ] 10.3 Create update-abis.sh script
+  - [ ] 8.3 Create update-abis.sh script
     - Implement script to copy contract ABIs to frontend
     - _Requirements: 3.5_
   
-  - [ ] 10.4 Create start-dev.sh script
+  - [ ] 8.4 Create start-dev.sh script
     - Implement script to start the development environment
     - _Requirements: 5.2_
-
-- [ ] 11. Write comprehensive documentation
-  - [ ] 11.1 Update README.md with detailed instructions
-    - Add project overview
-    - Add setup instructions
-    - Add usage instructions
-    - Add development workflow
-    - _Requirements: 5.1_
-  
-  - [ ] 11.2 Add code comments and documentation
-    - Add comments to smart contracts
-    - Add comments to frontend components
-    - Create API documentation
-    - _Requirements: 5.1, 5.7_
-
-# Frontend testing skipped for this learning project
-
-- [ ] 13. Implement responsive design
-  - [ ] 13.1 Add responsive styles
-    - Implement mobile-friendly layout
-    - Test on different screen sizes
-    - _Requirements: 5.6_
-  
-  - [ ] 13.2 Add loading indicators and error messages
-    - Implement loading spinners for async operations
-    - Create user-friendly error messages
-    - _Requirements: 2.7, 2.8_

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines the design for an Ethereum Name Service (ENS) demo project. The project aims to create a simplified but functional implementation of ENS core features for educational purposes. The system will consist of smart contracts implementing ENS functionality and a React-based frontend for user interaction. The entire stack will be deployable via Docker Compose for ease of use.
+This document outlines the design for an Ethereum Name Service (ENS) demo project. The project aims to create a simplified but functional implementation of ENS core features for educational purposes. The system will consist of smart contracts implementing ENS functionality and a Vite-based React frontend for user interaction. The entire stack will be deployable via Docker Compose for ease of use with minimal local dependencies.
 
 ## Architecture
 
@@ -10,7 +10,7 @@ The ENS demo will follow a layered architecture with the following components:
 
 ```mermaid
 graph TD
-    A[React Frontend] -->|Web3.js/ethers.js| B[Smart Contracts]
+    A[React Frontend with Vite] -->|Web3.js/ethers.js| B[Smart Contracts]
     B -->|State Storage| C[Ethereum Blockchain]
     D[Docker Compose] -->|Orchestrates| E[Local Ethereum Node]
     D -->|Orchestrates| F[Frontend Server]
@@ -56,20 +56,20 @@ sequenceDiagram
 
 ### System Components
 
-1. **Smart Contracts Layer**
+1. **Smart Contracts Layer** (Simplified for learning purposes)
    - ENS Registry Contract
    - Registrar Contract
    - Resolver Contract
    - Reverse Registrar Contract
 
 2. **Frontend Layer**
-   - React Application
+   - React Application with Vite
    - Web3 Integration (ethers.js)
    - UI Components
 
 3. **Infrastructure Layer**
    - Local Ethereum Node (Anvil)
-   - Docker Containers
+   - Docker Containers (simplified configuration)
    - Development Tools
 
 ## Components and Interfaces
@@ -335,8 +335,9 @@ ens-demo/
 │   │   │   ├── namehash.ts
 │   │   │   └── formatters.ts
 │   │   ├── App.tsx
-│   │   └── index.tsx
+│   │   └── main.tsx
 │   ├── package.json
+│   ├── vite.config.ts
 │   └── tsconfig.json
 └── scripts/
     ├── setup.sh
@@ -347,7 +348,7 @@ ens-demo/
 
 ## Docker Compose Configuration
 
-The Docker Compose setup will include:
+The Docker Compose setup will include simplified configurations for learning purposes:
 
 1. **Local Ethereum Node**
    - Based on Anvil (Foundry's local Ethereum node)
@@ -356,7 +357,7 @@ The Docker Compose setup will include:
 
 2. **Frontend Container**
    - Node.js environment
-   - React development server
+   - Vite development server
    - Hot-reloading enabled
 
 3. **Shared Volumes**
@@ -411,8 +412,8 @@ The Docker Compose setup will include:
    - Test end-to-end flows
    - Verify contract interactions
    - Optimize performance
-#
-# Namehash Algorithm
+
+## Namehash Algorithm
 
 The ENS system uses a special hashing algorithm called "namehash" to convert domain names into fixed-length identifiers that can be used in the ENS contracts. This algorithm is crucial for the functioning of the ENS system.
 
@@ -438,7 +439,7 @@ The namehash algorithm will be implemented in both the smart contracts (for on-c
 
 ## Docker Compose Configuration Details
 
-The Docker Compose configuration will be defined in a `docker-compose.yml` file at the root of the project. Here's a detailed specification:
+The Docker Compose configuration will be defined in a simplified `docker-compose.yml` file at the root of the project, assuming no local dependencies:
 
 ```yaml
 version: '3.8'
@@ -456,14 +457,7 @@ services:
       - ./contracts:/app/contracts
     environment:
       - ANVIL_CHAIN_ID=31337
-      - ANVIL_BLOCK_TIME=2
-    command: >
-      --host 0.0.0.0
-      --port 8545
-      --chain-id ${ANVIL_CHAIN_ID:-31337}
-      --block-time ${ANVIL_BLOCK_TIME:-2}
-      --state /data/anvil_state.json
-      --auto-impersonate
+    command: --host 0.0.0.0 --port 8545 --chain-id 31337
 
   # Contract deployment service
   deploy:
@@ -480,8 +474,8 @@ services:
     command: >
       sh -c "cd /app/contracts &&
              forge build &&
-             forge script script/Deploy.s.sol --rpc-url $$RPC_URL --broadcast &&
-             forge script script/Seed.s.sol --rpc-url $$RPC_URL --broadcast &&
+             forge script script/Deploy.s.sol --rpc-url $RPC_URL --broadcast &&
+             forge script script/Seed.s.sol --rpc-url $RPC_URL --broadcast &&
              cp -r out/*.json /app/abis/"
 
   # Frontend development server
@@ -495,11 +489,11 @@ services:
       - ./frontend:/app
       - /app/node_modules
     environment:
-      - REACT_APP_RPC_URL=http://localhost:8545
-      - REACT_APP_CHAIN_ID=31337
+      - VITE_RPC_URL=http://localhost:8545
+      - VITE_CHAIN_ID=31337
     depends_on:
       - deploy
-    command: npm start
+    command: npm run dev
 
 volumes:
   anvil-data:
@@ -507,13 +501,13 @@ volumes:
 
 ## Deployment Process
 
-The deployment process will be automated using Docker Compose and Foundry scripts. Here's the detailed workflow:
+The deployment process will be automated using Docker Compose and Foundry scripts. Here's the simplified workflow:
 
 1. **Local Development Setup**
    - Run `docker-compose up` to start all services
    - Anvil node starts and creates a local blockchain
    - Deploy service builds and deploys contracts to Anvil
-   - Frontend service starts the React development server
+   - Frontend service starts the Vite development server
 
 2. **Contract Deployment**
    - `Deploy.s.sol` script deploys all contracts in the correct order
