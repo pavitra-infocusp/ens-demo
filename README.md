@@ -2,6 +2,8 @@
 
 A learning project that implements a simplified version of the Ethereum Name Service (ENS) with smart contracts and a React frontend.
 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a2ce0c1e-8b1c-4e95-a9ba-0f410350a1cd" />
+
 ## Overview
 
 This project demonstrates a simplified ENS (Ethereum Name Service) implementation with a focus on core functionality and clean architecture. It features:
