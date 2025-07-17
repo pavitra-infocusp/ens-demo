@@ -1,46 +1,41 @@
-# Makefile for ENS Demo contracts using Docker
+# Makefile for ENS Demo contracts using Forge/Anvil
 
 # Default RPC URL for local development
 RPC_URL ?= http://localhost:8545
 
-# Docker image name
-IMAGE_NAME = ens-contracts
+# Default private key for local development
+PRIVATE_KEY ?= 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
 
-.PHONY: build test deploy seed all clean
+.PHONY: anvil deploy seed all clean build
 
-# Build Docker image
-build-image:
-	@echo "Building Docker image..."
-	@docker build -t $(IMAGE_NAME) ./contracts
+# Start Anvil local node
+anvil:
+	@echo "Starting Anvil..."
+	@anvil --host 0.0.0.0 --port 8545
 
 # Build contracts
-build: build-image
+build:
 	@echo "Building contracts..."
-	@docker run --rm $(IMAGE_NAME) build
-
-# Run tests
-test: build-image
-	@echo "Running tests..."
-	@docker run --rm $(IMAGE_NAME) test
+	@cd contracts && forge build
 
 # Deploy contracts
-deploy: build-image
+deploy: build
 	@echo "Deploying contracts..."
-	@docker run --rm $(IMAGE_NAME) script script/Deploy.s.sol --rpc-url $(RPC_URL) --broadcast
+	@cd contracts && forge script script/Deploy.s.sol --rpc-url $(RPC_URL) --private-key $(PRIVATE_KEY) --broadcast 2>&1 | tee deploy.log
+	@echo "Extracting contract addresses..."
+	@grep 'DEPLOYMENT_ADDRESSES:' -A 1 contracts/deploy.log | tail -1 > frontend/src/ENSContracts/addresses.json || echo '{}' > frontend/src/ENSContracts/addresses.json
+	@rm -f contracts/deploy.log
 	@echo "Contracts deployed successfully."
-	@echo "Copying ABIs to frontend..."
-	@mkdir -p frontend/src/abis
-	@cp -r contracts/out/*.json frontend/src/abis/
 
-# Seed with example data
-seed: build-image
-	@echo "Seeding with example data..."
-	@docker run --rm $(IMAGE_NAME) script script/Seed.s.sol --rpc-url $(RPC_URL) --broadcast
+# Seed contracts with test data
+seed: build
+	@echo "Seeding contracts..."
+	@cd contracts && forge script script/Seed.s.sol --rpc-url $(RPC_URL) --private-key $(PRIVATE_KEY) --broadcast
 
 # Build, test, deploy, and seed
-all: build test deploy seed
+all: deploy seed
 
 # Clean build artifacts
 clean:
 	@echo "Cleaning build artifacts..."
-	@docker run --rm -v $(PWD):/app $(IMAGE_NAME) clean
+	@cd contracts && forge clean

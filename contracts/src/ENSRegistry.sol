@@ -11,10 +11,10 @@ import "./interfaces/IENSRegistry.sol";
 contract ENSRegistry is IENSRegistry {
     // Mapping from node to owner
     mapping(bytes32 => address) private _owners;
-    
+
     // Mapping from node to resolver
     mapping(bytes32 => address) private _resolvers;
-    
+
     // Mapping from node to TTL
     mapping(bytes32 => uint64) private _ttls;
 
