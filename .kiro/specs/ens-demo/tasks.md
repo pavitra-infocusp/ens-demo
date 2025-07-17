@@ -141,12 +141,12 @@
     - _Requirements: 2.2, 2.4, 2.5_
 
 - [ ] 9. Set up Docker environment
-  - [-] 9.1 Create Dockerfile for Anvil
+  - [x] 9.1 Create Dockerfile for Anvil
     - Create Dockerfile for running Anvil node
     - Configure persistent storage for blockchain state
     - _Requirements: 4.1, 4.5_
   
-  - [ ] 9.2 Create Dockerfile for frontend
+  - [x] 9.2 Create Dockerfile for frontend
     - Create Dockerfile for running React development server
     - Configure hot-reloading
     - _Requirements: 4.2, 5.3_
