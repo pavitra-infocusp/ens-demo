@@ -1,0 +1,26 @@
+{
+  "name": "ens-demo",
+  "version": "0.1.0",
+  "description": "A learning project that implements a simplified version of the Ethereum Name Service (ENS)",
+  "private": true,
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "setup": "sh scripts/setup.sh",
+    "start": "docker-compose up",
+    "start:dev": "sh scripts/start-dev.sh",
+    "deploy:contracts": "sh scripts/deploy-contracts.sh",
+    "update:abis": "sh scripts/update-abis.sh"
+  },
+  "keywords": [
+    "ethereum",
+    "ens",
+    "blockchain",
+    "smart-contracts",
+    "react",
+    "foundry"
+  ],
+  "author": "",
+  "license": "MIT"
+}
