@@ -107,3 +107,115 @@ ens-demo/
    ```
 
 6. Open your browser and navigate to `http://localhost:5173`
+
+## Contract Interaction Flow
+
+The following sequence diagrams show how the contracts interact for each core ENS operation:
+
+### 1. Name Registration
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Frontend
+    participant ENSRegistrar
+    participant ENSRegistry
+    participant ENSResolver
+
+    User->>Frontend: Register "alice.eth"
+    Frontend->>ENSRegistrar: register("alice", userAddress)
+    ENSRegistrar->>ENSRegistry: setSubnodeOwner(ethNode, "alice", registrar)
+    ENSRegistry-->>ENSRegistrar: node hash
+    ENSRegistrar->>ENSRegistry: setResolver(node, resolver)
+    ENSRegistrar->>ENSResolver: setAddr(node, userAddress)
+    ENSRegistrar->>ENSRegistry: setOwner(node, userAddress)
+    ENSRegistrar->>ENSRegistrar: Update _nameToOwner mapping
+    ENSRegistrar->>ENSRegistrar: Update _ownerToName mapping
+    ENSRegistrar-->>Frontend: Success
+    Frontend-->>User: "alice.eth" registered
+```
+
+### 2. Subdomain Registration
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Frontend
+    participant ENSRegistrar
+    participant ENSRegistry
+    participant ENSResolver
+
+    User->>Frontend: Register "sub.alice.eth"
+    Frontend->>ENSRegistrar: registerSubdomain("alice", "sub", userAddress)
+    ENSRegistrar->>ENSRegistrar: Check parent ownership
+    ENSRegistrar->>ENSRegistry: setSubnodeOwner(parentNode, "sub", registrar)
+    ENSRegistry-->>ENSRegistrar: subdomain node hash
+    ENSRegistrar->>ENSRegistry: setResolver(subNode, resolver)
+    ENSRegistrar->>ENSResolver: setAddr(subNode, userAddress)
+    ENSRegistrar->>ENSRegistry: setOwner(subNode, userAddress)
+    ENSRegistrar-->>Frontend: Success
+    Frontend-->>User: "sub.alice.eth" registered
+```
+
+### 3. Name Transfer
+
+```mermaid
+sequenceDiagram
+    participant Owner
+    participant Frontend
+    participant ENSRegistrar
+    participant ENSRegistry
+    participant ENSResolver
+
+    Owner->>Frontend: Transfer "alice.eth" to newOwner
+    Frontend->>ENSRegistrar: transfer("alice", newOwnerAddress)
+    ENSRegistrar->>ENSRegistrar: Check current ownership
+    ENSRegistrar->>ENSRegistry: setOwner(node, newOwnerAddress)
+    ENSRegistrar->>ENSResolver: setAddr(node, newOwnerAddress)
+    ENSRegistrar->>ENSRegistrar: Update _nameToOwner mapping
+    ENSRegistrar->>ENSRegistrar: Update _ownerToName mappings
+    ENSRegistrar-->>Frontend: Success
+    Frontend-->>Owner: Ownership transferred
+```
+
+### 4. Name Lookup (Name → Address)
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Frontend
+    participant ENSRegistrar
+    participant ENSResolver
+
+    User->>Frontend: Lookup "alice.eth"
+    Frontend->>ENSRegistrar: resolve("alice")
+    ENSRegistrar->>ENSRegistrar: Calculate node hash
+    ENSRegistrar->>ENSResolver: addr(node)
+    ENSResolver-->>ENSRegistrar: Address
+    ENSRegistrar-->>Frontend: Address
+    Frontend-->>User: "alice.eth" → 0x123...
+```
+
+### 5. Reverse Lookup (Address → Name)
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Frontend
+    participant ENSRegistrar
+
+    User->>Frontend: Reverse lookup 0x123...
+    Frontend->>ENSRegistrar: reverseLookup(address)
+    ENSRegistrar->>ENSRegistrar: Check _ownerToName mapping
+    ENSRegistrar-->>Frontend: Name
+    Frontend-->>User: 0x123... → "alice.eth"
+```
+
+### Key Contract Interactions:
+
+1. **ENSRegistry**: Core registry that maintains node ownership and resolver mappings
+2. **ENSRegistrar**: Business logic for registration, transfers, and lookups
+3. **ENSResolver**: Stores address resolution data for each name
+
+**Important**: The registrar temporarily takes ownership during registration to set the resolver, then transfers final ownership to the user. This ensures proper permission handling.
+
