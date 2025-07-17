@@ -48,23 +48,27 @@ contract ENSRegistryTest is Test {
         assertEq(registry.ttl(ROOT_NODE), ttlValue);
     }
     
-    function testFailSetOwnerUnauthorized() public {
+    function test_Revert_When_UnauthorizedSetOwner() public {
         vm.prank(address(0x789));
+        vm.expectRevert("ENSRegistry: caller is not the owner");
         registry.setOwner(ROOT_NODE, newOwner);
     }
     
-    function testFailSetSubnodeOwnerUnauthorized() public {
+    function test_Revert_When_UnauthorizedSetSubnodeOwner() public {
         vm.prank(address(0x789));
+        vm.expectRevert("ENSRegistry: caller is not the owner");
         registry.setSubnodeOwner(ROOT_NODE, TEST_LABEL, newOwner);
     }
     
-    function testFailSetResolverUnauthorized() public {
+    function test_Revert_When_UnauthorizedSetResolver() public {
         vm.prank(address(0x789));
+        vm.expectRevert("ENSRegistry: caller is not the owner");
         registry.setResolver(ROOT_NODE, resolver);
     }
     
-    function testFailSetTTLUnauthorized() public {
+    function test_Revert_When_UnauthorizedSetTTL() public {
         vm.prank(address(0x789));
+        vm.expectRevert("ENSRegistry: caller is not the owner");
         registry.setTTL(ROOT_NODE, 3600);
     }
 }

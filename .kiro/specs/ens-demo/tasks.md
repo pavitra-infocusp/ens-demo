@@ -6,7 +6,7 @@
   - Create initial README.md with project overview
   - _Requirements: 3.1_
 
-- [ ] 2. Create smart contract structure (simplified for learning)
+- [x] 2. Create smart contract structure (simplified for learning)
   - [x] 2.1 Set up contract directory structure
     - Create the necessary folders for contracts, tests, and scripts
     - Configure foundry.toml with appropriate settings
@@ -19,7 +19,7 @@
     - Create IReverseRegistrar.sol interface
     - _Requirements: 1.1_
 
-- [ ] 3. Implement core ENS contracts (simplified for learning)
+- [x] 3. Implement core ENS contracts (simplified for learning)
   - [x] 3.1 Implement ENSRegistry contract
     - Implement owner, resolver, and TTL mappings
     - Implement setOwner, setSubnodeOwner, setResolver, and setTTL functions
@@ -48,13 +48,13 @@
     - Write unit tests for ReverseRegistrar
     - _Requirements: 1.5_
 
-- [ ] 4. Create deployment and seeding scripts
-  - [ ] 4.1 Create Deploy.s.sol script
+- [x] 4. Create deployment and seeding scripts
+  - [x] 4.1 Create Deploy.s.sol script
     - Implement script to deploy all contracts in the correct order
     - Set up initial ENS registry configuration
     - _Requirements: 1.1_
   
-  - [ ] 4.2 Create Seed.s.sol script
+  - [x] 4.2 Create Seed.s.sol script
     - Implement script to register example domains
     - Set up example resolvers and records
     - _Requirements: 1.8_
@@ -136,15 +136,15 @@
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.6, 4.7_
 
 - [ ] 8. Create helper scripts
-  - [ ] 8.1 Create setup.sh script
+  - [x] 8.1 Create setup.sh script
     - Implement script to install dependencies for both contracts and frontend
     - _Requirements: 3.4_
   
-  - [ ] 8.2 Create deploy-contracts.sh script
+  - [x] 8.2 Create deploy-contracts.sh script
     - Implement script to build and deploy contracts to local node
     - _Requirements: 5.5_
   
-  - [ ] 8.3 Create update-abis.sh script
+  - [x] 8.3 Create update-abis.sh script
     - Implement script to copy contract ABIs to frontend
     - _Requirements: 3.5_
   

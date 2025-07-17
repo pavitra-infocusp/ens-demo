@@ -3,11 +3,11 @@ pragma solidity ^0.8.20;
 
 import "forge-std/Test.sol";
 import "../src/ENSRegistry.sol";
-import "../src/Resolver.sol";
+import "../src/ENSResolver.sol";
 
-contract ResolverTest is Test {
+contract ENSResolverTest is Test {
     ENSRegistry public registry;
-    Resolver public resolver;
+    ENSResolver public resolver;
     
     address public owner;
     address public newOwner;
@@ -24,7 +24,7 @@ contract ResolverTest is Test {
         addrValue = address(0x456);
         
         registry = new ENSRegistry();
-        resolver = new Resolver(address(registry));
+        resolver = new ENSResolver(address(registry));
         
         // Set up the resolver for the root node
         registry.setResolver(ROOT_NODE, address(resolver));
@@ -58,13 +58,15 @@ contract ResolverTest is Test {
         assertFalse(resolver.supportsInterface(0x12345678));
     }
     
-    function testFailSetAddrUnauthorized() public {
+    function test_Revert_When_UnauthorizedSetAddr() public {
         vm.prank(address(0x789));
+        vm.expectRevert("Resolver: caller is not authorized");
         resolver.setAddr(TEST_NODE, addrValue);
     }
     
-    function testFailSetNameUnauthorized() public {
+    function test_Revert_When_UnauthorizedSetName() public {
         vm.prank(address(0x789));
+        vm.expectRevert("Resolver: caller is not authorized");
         resolver.setName(TEST_NODE, TEST_NAME);
     }
     

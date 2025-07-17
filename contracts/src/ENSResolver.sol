@@ -9,7 +9,7 @@ import "./interfaces/IENSRegistry.sol";
  * @dev Implementation of the ENS Resolver, which stores and provides
  * resolution data for domain names.
  */
-contract Resolver is IResolver {
+contract ENSResolver is IResolver {
     // ENS registry
     IENSRegistry private _registry;
     

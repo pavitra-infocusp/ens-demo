@@ -1,46 +1,14 @@
-version: '3.8'
-
 services:
   # Local Ethereum node using Anvil
   anvil:
-    build:
-      context: ./docker/anvil
-      dockerfile: Dockerfile
+    image: ghcr.io/foundry-rs/foundry:latest
+    container_name: anvil
+    environment:
+      ANVIL_IP_ADDR: "0.0.0.0"
+    working_dir: /anvil
     ports:
       - "8545:8545"
-    volumes:
-      - anvil-data:/data
-      - ./contracts:/app/contracts
-    environment:
-      - ANVIL_CHAIN_ID=31337
-      - ANVIL_BLOCK_TIME=2
-    command: >
-      --host 0.0.0.0
-      --port 8545
-      --chain-id ${ANVIL_CHAIN_ID:-31337}
-      --block-time ${ANVIL_BLOCK_TIME:-2}
-      --state /data/anvil_state.json
-      --auto-impersonate
-
-  # Contract deployment service
-  deploy:
-    build:
-      context: ./docker/foundry
-      dockerfile: Dockerfile
-    depends_on:
-      - anvil
-    volumes:
-      - ./contracts:/app/contracts
-      - ./frontend/src/abis:/app/abis
-    environment:
-      - RPC_URL=http://anvil:8545
-    command: >
-      -c "cd /app/contracts &&
-          forge build &&
-          forge script script/Deploy.s.sol --rpc-url $RPC_URL --broadcast &&
-          forge script script/Seed.s.sol --rpc-url $RPC_URL --broadcast &&
-          mkdir -p /app/abis &&
-          cp -r out/*.json /app/abis/"
+    command: anvil
 
   # Frontend development server
   frontend:
@@ -48,19 +16,10 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.dev
     ports:
-      - "${FRONTEND_PORT:-5173}:5173"
+      - "5173:5173"
     volumes:
       - ./frontend:/app
       - /app/node_modules
-      - frontend-node-modules:/app/node_modules
     environment:
-      - VITE_RPC_URL=http://localhost:${RPC_PORT:-8545}
-      - VITE_CHAIN_ID=${CHAIN_ID:-31337}
-      - NODE_ENV=development
-    depends_on:
-      - deploy
-    command: pnpm run dev -- --host 0.0.0.0
-    restart: unless-stopped
-
-volumes:
-  anvil-data:
+      - VITE_RPC_URL=http://localhost:8545
+      - VITE_CHAIN_ID=31337
